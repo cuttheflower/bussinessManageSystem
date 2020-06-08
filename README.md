@@ -1,4 +1,4 @@
-# bussinessmanagesystem
+# 跟着视频撸一个电商管理系统
 
 ## Project setup
 ```
