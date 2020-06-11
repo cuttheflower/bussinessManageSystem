@@ -50,18 +50,18 @@ export default {
                 if (valid){
                     //调用登录接口登录
                     const login = new Promise((resolve, reject) => {
-                        let res = this.$http.post('login', this.loginForm);
+                        const res = this.$http.post('login', this.loginForm);
                             resolve(res);
                     });
                     login.then(res => {
-                        let data = res.data;
+                        const data = res.data;
                         if (data.meta.status === 200) {
                              this.$message({
                                 message : '登录成功',
                                 type: 'success'
                              });
                              //设置token作为登录标识
-                            let token = data.data.token;
+                            const token = data.data.token;
                             sessionStorage.setItem('token', token);
                             this.$router.push('/home')
                         }
