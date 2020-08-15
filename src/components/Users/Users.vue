@@ -45,10 +45,25 @@
                         <el-switch v-model="scope.row.state"></el-switch>
                     </template>
                 </el-table-column>
-                 <el-table-column
-                    label = "操作">
+                 <el-table-column label = "操作">
+                     <template v-slot = "scope">
+                        <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
+                        <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+                        <el-tooltip class="item" effect="dark" content="分配角色" placement="top-start" :enterable="false">
+                            <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+                        </el-tooltip>
+                     </template>
                 </el-table-column>
             </el-table>
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-sizes="[1, 2, 5, 20]"
+                :page-size="queryParams.pagesize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="total">
+            </el-pagination>
         </el-card>
 
     </div>
@@ -59,8 +74,8 @@ export default {
         return {
             queryParams: {
                 query : '九头蛇万岁',
-                pagenum : 1,
-                pagesize : 2
+                pagenum : 12,
+                pagesize : 5
             },
             usersInfo: [],
             usersInfoBeta: [
@@ -70,13 +85,21 @@ export default {
                     mobile : '121212121',
                     rolename : '管理员',
                     state: true
+                },
+                 {
+                    username : 'chen',
+                    email : 'cuttheflower@126.com',
+                    mobile : '121212121',
+                    rolename : '操作员',
+                    state: false
                 }
             ],
-            total: 0
+            currentPage:1,
+            total: 60
         }
     },
     created() {
-        this.getUserInfo();
+        //this.getUserInfo();
     },
     methods: {
         getUserInfo() {
@@ -97,6 +120,12 @@ export default {
                 this.usersInfo = data.data.users;
                 this.total = data.data.total;
             })
+        },
+        handleSizeChange(newSize) {
+            console.log(newSize);
+        },
+        handleCurrentChange(newNum) {
+            console.log(newNum);
         }
     }
 }
